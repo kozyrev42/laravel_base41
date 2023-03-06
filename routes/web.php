@@ -19,7 +19,16 @@ Route::get('/', function () {
     return view('layouts.layout');
 });
 
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts', [PostController::class, 'index'])->name('post.index');
+Route::get('/posts/create', [PostController::class, 'create'])->name('post.create'); // страница создания поста
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store'); // экшен записи в бд
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+
+
+
+
+
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 
 

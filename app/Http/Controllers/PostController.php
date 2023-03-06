@@ -11,45 +11,37 @@ class PostController extends Controller
     {
         $posts = Post::all();
 
-//        dd($post->title); all()
-//        dd($post);
-        return view('posts', [
+        return view('posts.index', [
             'posts' => $posts
         ]);
     }
 
+    // страница создания поста
     public function create()
     {
-        $postsArr = [
-            [
-                'title' => '11111cookout',
-                'content' => '111111hhbunubfrcertyu',
-                'image' => '1111hguhuhuh.jpg',
-                'likes' => '15',
-                'is_published' => '1',
-            ],
-            [
-                'title' => '22222cookout',
-                'content' => '22222hhbunubfrcertyu',
-                'image' => '22222hguhuhuh.jpg',
-                'likes' => '15',
-                'is_published' => '1',
-            ]
-        ];
+        return view('posts.create');
+    }
 
-//                запись в базу
-//        Post::create([
-//            'title' => 'cookout',
-//            'content' => 'hhbunubfrcertyu',
-//            'image' => 'hguhuhuh.jpg',
-//            'likes' => '15',
-//            'is_published' => '1',
-//        ]);
 
-//      запись в базу, множества записей в Цикле
-//        foreach ($postsArr as $item) {
-//            Post::create($item);
-//        }
+    // экшен записи в бд
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'title' => 'string',
+            'post_content' => 'string',
+            'image' => 'string',
+        ]);
+        // метод create() ждёт массив с ключами и значениями
+        Post::create($data);
+        return redirect()->route('post.index');
+    }
+
+    // прилетает id, по этому id создаётся Объект Поста
+    public function show(Post $post)
+    {
+        return view('posts.show',[
+            'post' => $post
+        ]);
     }
 
 //    обновление
@@ -92,8 +84,5 @@ class PostController extends Controller
             ],
 
         );
-
-        dd($post);
-
     }
 }
