@@ -44,45 +44,44 @@ class PostController extends Controller
         ]);
     }
 
-//    обновление
-    public function update()
+    // контроллер возвращает страницу для редактирования поста
+    // compact('post') - проброс Объекта, заменяет следующий код: ['post'=>$post]
+    public function edit(Post $post)
     {
+        return view('posts.edit', compact('post'));
+    }
 
-        $post = Post::find(1);
 
-        $post->update([
-            'title' => 'обновленный тайтл',
-            'content' => 'обновленный content',
-            'image' => 'обновленный-image.jpg',
-            'likes' => '20',
-            'is_published' => '1',
+    //    обновление
+    public function update(Post $post)
+    {
+        $data = request()->validate([
+            'title' => 'string',
+            'post_content' => 'string',
+            'image' => 'string',
         ]);
-
-
-        $post = Post::find(1);
-        dd($post);
+        // метод create() ждёт массив с ключами и значениями
+        $post->update($data);
+        return redirect()->route('posts.show', $post->id);
     }
 
-//    удаление
-    public function delete()
+    //    удаление
+    public function destroy(Post $post)
     {
-
-        $post = Post::find(2);
         $post->delete();
+        return redirect()->route('post.index');
     }
 
 
-//  поможет вам найти запись в таблице базы данных и возвращает,
-//  если в таблице базы данных нет записей, он создаст новую запись
+    //  поможет вам найти запись в таблице базы данных и возвращает,
+    //  если в таблице базы данных нет записей, он создаст новую запись
     public function firstOrCreate()
     {
         $post = Post::firstOrCreate(
-
             [
                 'title' => 'alex',
                 'content' => '111111hhbunubfrcertyu',
             ],
-
         );
     }
 }
