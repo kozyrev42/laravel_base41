@@ -23,6 +23,14 @@ class CreatePostsTable extends Migration
             $table->timestamps();
 
             $table->softDeletes();
+
+            // поле хранит id из таблице 'categories'
+            $table->unsignedBigInteger('category_id')->nullable();
+            // индексируем поле
+            $table->index('category_id','post_category_index');
+            // связываем таблицы на уровне базы
+            $table->foreign('category_id','post_category_fk')->on('categories')->references('id');
+
         });
     }
 
