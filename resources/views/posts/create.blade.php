@@ -1,29 +1,40 @@
 @extends('layouts.layout')
 
 @section('content')
+    <div class="container">
+        <h3>страница создания поста</h3>
 
-    <h3>страница создания поста</h3>
+        <form class="col-6" action="{{route('posts.store')}}" method="post">
+            @csrf
+            <div>
+                <label for="title" >Title</label>
+                <input name="title" type="text" class="form-control" id="title" placeholder="title">
+            </div>
+            <br>
 
-    <form class="row g-3" action="{{route('posts.store')}}" method="post">
-        @csrf
-        <div class="col-md-6">
-            <label for="title" >Title</label>
-            <input name="title" type="text" class="form-control" id="title" placeholder="title">
-        </div>
+            <div>
+                <label for="post_content" >Content</label>
+                <textarea name="post_content" type="text" class="form-control" id="post_content" placeholder="post_content"></textarea>
+            </div>
+            <br>
 
-        <div class="col-md-6">
-            <label for="post_content" >Content</label>
-            <textarea name="post_content" type="text" class="form-control" id="post_content" placeholder="post_content"></textarea>
-        </div>
+            <div>
+                <label for="image" >Image</label>
+                <input name="image" type="text" class="form-control" id="image" placeholder="image">
+            </div>
+            <br>
 
-        <div class="col-md-6">
-            <label for="image" >Image</label>
-            <input name="image" type="text" class="form-control" id="image" placeholder="image">
-        </div>
+            <label for="category" >Категория</label>
+            <select name="category_id" class="form-select" id="category">
+                @foreach($categories as $category)
+                    <option value="{{$category->id}}">{{$category->title}}</option>
+                @endforeach
+            </select>
+            <br>
 
-
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary">Создать пост</button>
-        </div>
-    </form>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Создать пост</button>
+            </div>
+        </form>
+    </div>
 @endsection

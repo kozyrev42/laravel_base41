@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -24,7 +25,9 @@ class PostController extends Controller
     // страница создания поста
     public function create()
     {
-        return view('posts.create');
+        // получаем все категории, отправляем на страницу, для дальнейшего выбора
+        $categories = Category::all();
+        return view('posts.create', compact('categories'));
     }
 
 
@@ -35,7 +38,9 @@ class PostController extends Controller
             'title' => 'string',
             'post_content' => 'string',
             'image' => 'string',
+            'category_id' => 'integer'
         ]);
+
         // метод create() ждёт массив с ключами и значениями
         Post::create($data);
         return redirect()->route('post.index');
@@ -53,7 +58,10 @@ class PostController extends Controller
     // compact('post') - проброс Объекта, заменяет следующий код: ['post'=>$post]
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        // получаем все категории, отправляем на страницу, для дальнейшего выбора
+        $categories = Category::all();
+
+        return view('posts.edit', compact('post','categories'));
     }
 
 
@@ -64,6 +72,7 @@ class PostController extends Controller
             'title' => 'string',
             'post_content' => 'string',
             'image' => 'string',
+            'category_id' => 'integer'
         ]);
         // метод create() ждёт массив с ключами и значениями
         $post->update($data);
