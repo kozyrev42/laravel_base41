@@ -27,7 +27,11 @@ class PostController extends Controller
     {
         // получаем все категории, отправляем на страницу, для дальнейшего выбора
         $categories = Category::all();
-        return view('posts.create', compact('categories'));
+
+        // получим все теги, отправим на страницу
+        $tags = Tag::all();
+
+        return view('posts.create', compact('categories', 'tags'));
     }
 
 
@@ -38,11 +42,23 @@ class PostController extends Controller
             'title' => 'string',
             'post_content' => 'string',
             'image' => 'string',
-            'category_id' => 'integer'
+            'category_id' => 'integer',
+            'tags' => '' // прилетает массив с выбранными тегами
         ]);
 
+        // сохраняем массив тегов в переменнную
+        $tags = $data['tags'];
+
+        // удаляем массив тегов по ключу
+        unset($data['tags']);
+
+        // сохраним Пост в Базу, вернётся id созданного поста
         // метод create() ждёт массив с ключами и значениями
-        Post::create($data);
+        $post = Post::create($data);
+
+        // к полученному Посту, через отношение, приклепляем теги (запись в соединительную таблицу)
+        $post->tags()->attach($tags);
+
         return redirect()->route('post.index');
     }
 

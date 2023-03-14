@@ -33,6 +33,7 @@
             <select name="category_id" class="form-select" id="category">
                 @foreach($categories as $category)
                     <option
+                        {{-- если категория поста соответствует какой-либо категории из доступных, она "выбирается" --}}
                         {{$category->id === $post->category->id ? 'selected' : ''}}
                         value="{{$category->id}}">
                         {{$category->title}}

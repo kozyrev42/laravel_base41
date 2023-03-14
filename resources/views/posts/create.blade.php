@@ -7,27 +7,36 @@
         <form class="col-6" action="{{route('posts.store')}}" method="post">
             @csrf
             <div>
-                <label for="title" >Title</label>
+                <label for="title">Title</label>
                 <input name="title" type="text" class="form-control" id="title" placeholder="title">
             </div>
             <br>
 
             <div>
-                <label for="post_content" >Content</label>
-                <textarea name="post_content" type="text" class="form-control" id="post_content" placeholder="post_content"></textarea>
+                <label for="post_content">Content</label>
+                <textarea name="post_content" type="text" class="form-control" id="post_content"
+                          placeholder="post_content"></textarea>
             </div>
             <br>
 
             <div>
-                <label for="image" >Image</label>
+                <label for="image">Image</label>
                 <input name="image" type="text" class="form-control" id="image" placeholder="image">
             </div>
             <br>
 
-            <label for="category" >Категория</label>
+            <label for="category">Категория</label>
             <select name="category_id" class="form-select" id="category">
                 @foreach($categories as $category)
                     <option value="{{$category->id}}">{{$category->title}}</option>
+                @endforeach
+            </select>
+            <br>
+
+            <label for="tags">Теги</label>
+            <select name="tags[]" id="tags" class="form-select" multiple aria-label="multiple select example">
+                @foreach($tags as $tag)
+                    <option value="{{$tag->id}}">{{$tag->title_tag}}</option>
                 @endforeach
             </select>
             <br>
