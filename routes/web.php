@@ -29,4 +29,4 @@ Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.
 Route::get('/firstorcreate', [PostController::class, 'firstOrCreate']);
 
 
-Route::get('/about', [AboutController::class, 'index'])->name('about.index');
+Route::get('/about', [AboutController::class, 'index'])->name('about.index');               // роут на страницу About
