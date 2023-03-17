@@ -36,7 +36,25 @@
                         {{-- если категория поста соответствует какой-либо категории из доступных, она "выбирается" --}}
                         {{$category->id === $post->category->id ? 'selected' : ''}}
                         value="{{$category->id}}">
-                        {{$category->title}}
+                            {{$category->title}}
+                    </option>
+                @endforeach
+            </select>
+            <br>
+
+            {{-- также получим все теги, и отметим те, которые есть у поста --}}
+            <label for="tags">Теги</label>
+            {{-- name="tags[]" // форма передаст переменную "tags", которая будет содержать массив выбранных опций --}}
+            <select name="tags[]" id="tags" class="form-select" multiple>
+                {{-- перебираем теги из базы --}}
+                @foreach($tags as $tag)
+                    <option
+                        {{-- перебираем теги которые принадлежат посту, чтобы в option указать 'selected' --}}
+                        @foreach($post->tags as $tagPost)
+                            {{$tag->id === $tagPost->id ? 'selected' : ''}}
+                        @endforeach
+                        value="{{$tag->id}}">
+                            {{$tag->title_tag}}
                     </option>
                 @endforeach
             </select>

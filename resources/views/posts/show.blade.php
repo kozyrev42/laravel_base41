@@ -14,6 +14,13 @@
         image: {{$post->image}}
         <br>
 
+        <hr>
+        <h5>Тэги поста:</h5>
+        @foreach($post->tags as $tag)
+            <div>{{$tag->title_tag}}</div>
+        @endforeach
+
+
         <a href="{{route('posts.edit', $post->id)}}">Редактировать Пост</a>
         <br>
 

@@ -12,6 +12,6 @@ class Tag extends Model
     public function posts()
     {
         // каждый Тег, принадлежит многим Постам, прописываем таблицу, и поля в ней, по которым происходит связывание данных
-        return $this->belongsToMany(Post::class, 'post_tags','tag_id', 'post_id');
+        return $this->belongsToMany(Post::class, 'post_tag','tag_id', 'post_id');
     }
 }

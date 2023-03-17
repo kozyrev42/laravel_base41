@@ -9,17 +9,9 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index()
+    public function __invoke()
     {
-        // $post = Post::find(1);
-        // $tag = Tag::find(2);
-        // dd($tag->posts);
-
-        $posts = Post::all();
-
-        return view('posts.index', [
-            'posts' => $posts
-        ]);
+        // TODO: Implement __invoke() method.
     }
 
     // страница создания поста
@@ -39,8 +31,8 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => 'string',
-            'post_content' => 'string',
+            'title' => 'string|required',
+            'post_content' => 'string|required',
             'image' => 'string',
             'category_id' => 'integer',
             'tags' => '' // прилетает массив с выбранными тегами
@@ -77,7 +69,10 @@ class PostController extends Controller
         // получаем все категории, отправляем на страницу, для дальнейшего выбора
         $categories = Category::all();
 
-        return view('posts.edit', compact('post','categories'));
+        // получим все "теги" из базы, отправляем на страницу
+        $tags = Tag::all();
+
+        return view('posts.edit', compact('post','categories', 'tags'));
     }
 
 
@@ -85,13 +80,25 @@ class PostController extends Controller
     public function update(Post $post)
     {
         $data = request()->validate([
-            'title' => 'string',
-            'post_content' => 'string',
+            'title' => 'string|required',            // тип должен быть строкой|обязательно к заполнению
+            'post_content' => 'string|required',
             'image' => 'string',
-            'category_id' => 'integer'
+            'category_id' => 'integer',
+            'tags' => '' // прилетает массив с выбранными тегами
         ]);
-        // метод create() ждёт массив с ключами и значениями
+
+        // сохраняем массив тегов в переменнную
+        $tags = $data['tags'];
+
+        // удаляем массив тегов по ключу
+        unset($data['tags']);
+
+        // обновляем Пост
         $post->update($data);
+
+        // sync() - старые привязки удаляет, которые были привязаня "атачем", новые Теги "Атачим"
+        $post->tags()->sync($tags);
+
         return redirect()->route('posts.show', $post->id);
     }
 
