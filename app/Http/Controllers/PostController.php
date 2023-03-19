@@ -27,33 +27,6 @@ class PostController extends Controller
     }
 
 
-    // экшен записи в бд
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'title' => 'string|required',
-            'post_content' => 'string|required',
-            'image' => 'string',
-            'category_id' => 'integer',
-            'tags' => '' // прилетает массив с выбранными тегами
-        ]);
-
-        // сохраняем массив тегов в переменнную
-        $tags = $data['tags'];
-
-        // удаляем массив тегов по ключу
-        unset($data['tags']);
-
-        // сохраним Пост в Базу, вернётся id созданного поста
-        // метод create() ждёт массив с ключами и значениями
-        $post = Post::create($data);
-
-        // к полученному Посту, через отношение, приклепляем теги (запись в соединительную таблицу)
-        $post->tags()->attach($tags);
-
-        return redirect()->route('post.index');
-    }
-
     // прилетает id, по этому id создаётся Объект Поста
     public function show(Post $post)
     {

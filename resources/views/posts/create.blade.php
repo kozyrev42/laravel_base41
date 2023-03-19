@@ -30,6 +30,10 @@
             <div>
                 <label for="image">Image:</label>
                 <input name="image" type="text" class="form-control" id="image" placeholder="image">
+
+                @error('image')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <br>
 
