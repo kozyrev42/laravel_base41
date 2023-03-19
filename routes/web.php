@@ -26,6 +26,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Post'],function () {
     // single method controllers
     Route::get('/posts', 'IndexController')->name('post.index');
     Route::post('/posts', 'StoreController')->name('posts.store');  // экшен записи в бд
+    Route::patch('/posts/{post}', 'UpdateController')->name('posts.update'); // экшен редактирования
 });
 
 // example of grouping methods of one controller
@@ -37,7 +38,6 @@ Route::controller(AboutController::class)->group(function () {
 Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');        // страница создания поста
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');           // показ 1 поста
 Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');      // страница редактирования
-Route::patch('/posts/{post}', [PostController::class, 'update'])->name('posts.update');     // экшен редактирования
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
 Route::get('/firstorcreate', [PostController::class, 'firstOrCreate']);

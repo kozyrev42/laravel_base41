@@ -3,23 +3,22 @@
 namespace App\Http\Controllers\Post;
 
 use App\Http\Requests\Post\UpdateRequest;
-
+use App\Models\Post;
 /*
  *
  * New post db write action
  *
 */
 
-class StoreController extends BaseController
+class UpdateController extends BaseController
 {
-    public function __invoke(UpdateRequest $request)
+    public function __invoke(UpdateRequest $request, Post $post)
     {
-        // валидируем входяшие данные используя UpdateRequest
         $data = $request->validated();
-
+//        dd($data);
         // отдаём данные в сервис для дальнейшей обработки
-        $this->service->store($data);
+        $this->service->update($post, $data);
 
-        return redirect()->route('post.index');
+        return redirect()->route('posts.show', $post->id);
     }
 }

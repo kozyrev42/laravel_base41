@@ -9,11 +9,6 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function __invoke()
-    {
-        // TODO: Implement __invoke() method.
-    }
-
     // страница создания поста
     public function create()
     {
@@ -48,32 +43,6 @@ class PostController extends Controller
         return view('posts.edit', compact('post','categories', 'tags'));
     }
 
-
-    //    обновление
-    public function update(Post $post)
-    {
-        $data = request()->validate([
-            'title' => 'string|required',            // тип должен быть строкой|обязательно к заполнению
-            'post_content' => 'string|required',
-            'image' => 'string',
-            'category_id' => 'integer',
-            'tags' => '' // прилетает массив с выбранными тегами
-        ]);
-
-        // сохраняем массив тегов в переменнную
-        $tags = $data['tags'];
-
-        // удаляем массив тегов по ключу
-        unset($data['tags']);
-
-        // обновляем Пост
-        $post->update($data);
-
-        // sync() - старые привязки удаляет, которые были привязаня "атачем", новые Теги "Атачим"
-        $post->tags()->sync($tags);
-
-        return redirect()->route('posts.show', $post->id);
-    }
 
     //    удаление
     public function destroy(Post $post)
