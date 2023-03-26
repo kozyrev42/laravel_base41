@@ -13,8 +13,8 @@ class IndexController extends Controller
         // $tag = Tag::find(2);
         // dd($tag->posts);
 
-        $posts = Post::all();
-
+        // $posts = Post::all();
+        $posts = Post::paginate(5);
         return view('posts.index', [
             'posts' => $posts
         ]);

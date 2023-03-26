@@ -8,15 +8,19 @@
             <a href="{{ route('posts.show', $post->id) }}">{{$post->title}}</a>
             <br>
 
-            <h5>Категория:</h5> {{$post->category->title}}
-            <br>
+            <h4>Категория:</h4> {{$post->category->title}}
+            <br><br>
 
-            <h5>Тэги:</h5>
+            <h4>Тэги:</h4>
                 @foreach($post->tags as $tag)
                     <div>{{$tag->title_tag}}</div>
                 @endforeach
             <hr>
         @endforeach
+
+        <div>
+            {{$posts->links()}}
+        </div>
     </div>
 
 @endsection
