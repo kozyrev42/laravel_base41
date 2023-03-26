@@ -21,6 +21,7 @@ Route::get('/', function () {
     return view('layouts.layout');
 });
 
+// POSTS
 // route grouping example
 Route::group(['namespace' => 'App\Http\Controllers\Post'],function () {
     // single method controllers
@@ -28,12 +29,6 @@ Route::group(['namespace' => 'App\Http\Controllers\Post'],function () {
     Route::post('/posts', 'StoreController')->name('posts.store');  // экшен записи в бд
     Route::patch('/posts/{post}', 'UpdateController')->name('posts.update'); // экшен редактирования
 });
-
-// example of grouping methods of one controller
-Route::controller(AboutController::class)->group(function () {
-    Route::get('/about','index')->name('about.index');
-});
-
 
 Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');        // страница создания поста
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');           // показ 1 поста
@@ -43,3 +38,8 @@ Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.
 Route::get('/firstorcreate', [PostController::class, 'firstOrCreate']);
 
 
+// ABOUT
+// example of grouping methods of one controller
+Route::controller(AboutController::class)->group(function () {
+    Route::get('/about','index')->name('about.index');
+});
