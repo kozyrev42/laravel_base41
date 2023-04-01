@@ -3,6 +3,7 @@
 use App\Http\Controllers\PostController;
 
 use App\Http\Controllers\AboutController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -43,3 +44,8 @@ Route::get('/firstorcreate', [PostController::class, 'firstOrCreate']);
 Route::controller(AboutController::class)->group(function () {
     Route::get('/about','index')->name('about.index');
 });
+
+// роуты авторизации находятся в файле AuthRouteMethods
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
