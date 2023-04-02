@@ -31,7 +31,10 @@ Route::group(['namespace' => 'App\Http\Controllers\Post'],function () {
     Route::patch('/posts/{post}', 'UpdateController')->name('posts.update'); // экшен редактирования
 });
 
-Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');        // страница создания поста
+Route::get('/posts/create', [PostController::class, 'create'])
+    ->name('post.create')
+    ->middleware('auth')    // доступно только для авторизованного
+    ->middleware('admin');  // доступно только для админа
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');           // показ 1 поста
 Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');      // страница редактирования
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
