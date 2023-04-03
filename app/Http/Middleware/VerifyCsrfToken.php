@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        // при отправки запроса на роут /posts, проверки токена CSRF не будет
+        '/posts'
     ];
 }
